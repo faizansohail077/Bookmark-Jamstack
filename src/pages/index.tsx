@@ -14,7 +14,7 @@ const GET_BOOKMARKS = gql`
   }
 `;
 const ADD_BOOKMARK = gql`
-  mutation addBookmark($url: String!, $title: String) {
+  mutation addBookmark($url: String!, $title: String!) {
     addBookmark(url: $url, title: $title) {
       id
     }
@@ -34,8 +34,8 @@ function index() {
     console.log(urlField.value);
     addBookmark({
       variables: {
-        url: urlField,
-        title: titleField,
+        url: urlField.value,
+        title: titleField.value,
       },
       refetchQueries: [{ query: GET_BOOKMARKS }],
     });
@@ -58,12 +58,12 @@ function index() {
       <br />
       <button onClick={handleSubmit}>Add bookmark</button>
       <h2>My bookmark data</h2>
-      {JSON.stringify(data.bookmarks)}
+      {JSON.stringify(data.bookmarks[0].title)}
 
       <div className="card-container">
-        {/* {data.bookmarks.map((bm) => ( */}
-          <Cards url={urlField} title={titleField} />
-        {/* ))} */}
+        {data.bookmarks.map((bm) => (
+          <Cards url={bm.url} title={bm.title} />
+       ))}
       </div>
     </div>
   );

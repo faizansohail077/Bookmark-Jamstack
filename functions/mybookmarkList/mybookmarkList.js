@@ -25,11 +25,11 @@ const resolvers = {
         var adminClient = new faunadb.Client({ secret: "fnAD9iPOPmACBnhyD9UOCtop3ZfocWpnC3oP5hVm" })
         const result = await adminClient.query(
           q.Map(
-            q.Pagniate(q.Match(q.Index('url'))),
-            q.lambda(x => q.Get(x))
+            q.Paginate(q.Match(q.Index('url'))),
+            q.Lambda(x => q.Get(x))
           )
         )
-        console.log(result.data)
+        console.log("result",result.data[0].data.title)
         return result.data.map(d=>({
           id: d.ts,
           title :d.data.title,
@@ -49,6 +49,9 @@ const resolvers = {
       try {
         var adminClient = new faunadb.Client({ secret: "fnAD9iPOPmACBnhyD9UOCtop3ZfocWpnC3oP5hVm" })
 
+        console.log("title",title);
+        console.log("url",url);
+
         const result = await adminClient.query(
           q.Create(q.Collection('bookmarks'), {
             data: {
@@ -58,6 +61,7 @@ const resolvers = {
             }
           })
         )
+        console.log("data",result);
         return result.data.data
       }
       catch (err) {
