@@ -20,6 +20,9 @@
     "graphql": "^15.3.0",
     "netlify-cli": "^2.69.10",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "apollo-server-lambda": "^2.18.2",
+    "faunadb": "^4.0.0"
+    
   }
 }
